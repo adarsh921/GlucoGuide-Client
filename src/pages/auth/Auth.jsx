@@ -1,20 +1,14 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { Button, Checkbox, Group, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { Link } from "react-router-dom";
 const Auth = () => {
   return (
     <div>
-      <SignedOut>
-        <SignInButton mode="modal" />
-        <SignUpButton mode="modal" />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <h1>Register</h1>
+      <span>Already registered?--</span>
+      <Link to='/login'>
+        <span>Log In</span>
+      </Link>
     </div>
   );
 };
