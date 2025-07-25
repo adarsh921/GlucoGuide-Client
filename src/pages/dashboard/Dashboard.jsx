@@ -4,7 +4,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>GlucoGuide</h1>
-      <Link to='/auth'>
+      <Link to='/register'>
         <Button>Get Started</Button>
       </Link>
     </div>
