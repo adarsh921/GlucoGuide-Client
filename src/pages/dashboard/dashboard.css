@@ -1,0 +1,28 @@
+.landing-page {
+    background-color: #F4A9AE;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('background1.webp');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+/* Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: transparent;
+    border-bottom: 5px dotted white;
+    /* keep background same as landing */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    /* white logo text */
+}
