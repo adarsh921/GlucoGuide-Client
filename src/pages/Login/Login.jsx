@@ -28,7 +28,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     console.log("Form Submitted:", values);
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/login`,
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
       values,
       { withCredentials: true }
     );
@@ -52,7 +52,7 @@ const Login = () => {
           style={{
             width: "30%",
             margin: "auto",
-            marginTop:"10%"
+            marginTop: "10%",
           }}
           className="loginFlex"
         >

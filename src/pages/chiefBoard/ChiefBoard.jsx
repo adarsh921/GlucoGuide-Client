@@ -8,6 +8,7 @@ const ChiefBoard = () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (!token) {
       navigate("/login");

@@ -53,12 +53,10 @@ const Auth = () => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/register`,
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
         formData,
         { withCredentials: true }
       );
-
-     
 
       console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
