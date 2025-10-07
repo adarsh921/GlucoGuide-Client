@@ -21,7 +21,7 @@ const TodaySugarDisplay = () => {
   const lunchmeals = todayMeals
     .filter((meal) => meal.mealTime === "Lunch")
     .map((meal) => meal.foodName);
-    
+
   const dinnermeals = todayMeals
     .filter((meal) => meal.mealTime === "Dinner")
     .map((meal) => meal.foodName);
@@ -43,11 +43,18 @@ const TodaySugarDisplay = () => {
     fetchSugarData();
   }, []);
   return (
-    <Paper>
+    <div
+      style={{
+        marginTop: "5px",
+        display: "flex",
+        justifyContent: "space-around",
+        padding:"7%",
+      }}
+    >
       <BreakFast meals={breakfastmeals} />
       <Lunch meals={lunchmeals} />
       <Dinner meals={dinnermeals} />
-    </Paper>
+    </div>
   );
 };
 
