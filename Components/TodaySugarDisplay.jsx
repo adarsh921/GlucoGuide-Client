@@ -9,7 +9,7 @@ const TodaySugarDisplay = () => {
   const [todayMeals, setTodayMeals] = useState([]);
   const [todaysSugar, setTodaysSugar] = useState(null);
 
-  // NOT A GOOD HABIT TO CREATE A NEW EMPTY ARRAY ON EVERY RENDER
+  // NOT A GOOD HABIT TO CREATE A NEW EMPTY ARRAY ON EVERY RENDER!
   // const breakfastmeals = [];
   // const lunchmeals = [];
   // const dinnermeals = [];

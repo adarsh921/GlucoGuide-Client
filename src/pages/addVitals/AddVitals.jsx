@@ -1,8 +1,13 @@
 import { NumberInput, Select, Textarea, Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import api from "../../api/axios";
+import VitalsDisplay from "../../../Components/VitalsDisplay";
+import { useState, useEffect, useMemo } from "react";
 
 const AddVitals = () => {
+  const [vitalsData, setVitalsData] = useState(null);
+  console.log(vitalsData);
+
   const vitalsForm = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -20,13 +25,36 @@ const AddVitals = () => {
     },
   });
 
+  // if user refreshes screen the old data from screen shouldnt dissapear
+  useEffect(() => {
+    const fetchVitals = async () => {
+      try {
+        const response = await api.get(`/api/vitals/today`);
+        console.log("GET response:", response);
+        setVitalsData(response.data.freshVitals); //freshVitals is already an array so no need wrap it in array before calling setVitalsData
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    fetchVitals();
+  }, []);
+
+  
+  /* TO PREVENT RENDERING OF VitalsDisplay EVERYTIME A FORM FIELD CHANGES, WE USED USEMEMO */
+  const memoizedVitalsDisplay = useMemo(() => {
+    if (!vitalsData) return null;
+    return <VitalsDisplay values={vitalsData} />;
+  }, [vitalsData]);
+  
+
   const handleSubmit = async (values) => {
     console.log(values);
     try {
       const response = await api.post(`/api/vitals`, values);
-      console.log("from backend:", response.data.analysis);
+      console.log("from backend:", response.data);
+      setVitalsData([response.data.savedVitals]);
     } catch (error) {
-      console.error("Error creating meal:", error);
+      console.error("Error:", error);
     }
   };
 
@@ -143,31 +171,10 @@ const AddVitals = () => {
           Add Vitals
         </Button>
       </form>
+
+      {memoizedVitalsDisplay}
     </div>
   );
 };
 
 export default AddVitals;
-
-// export const addVitals = async (req, res) => {
-//   try {
-//     const {
-//       userId,
-//       bloodSugarLevel,
-//       fastingOrPostMeal,
-//       bpSystolic,
-//       bpDiastolic,
-//       weight,
-//       height,
-//       waistCircumference,
-//       steps,
-//       sleepHours,
-//       stressLevel,
-//       notes,
-//     } = req.body;
-
-//     if (!userId || !bloodSugarLevel || !fastingOrPostMeal) {
-//       return res.status(400).json({
-//         message: "userId, bloodSugarLevel and fastingOrPostMeal are required",
-//       });
-//     }
