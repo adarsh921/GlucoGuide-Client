@@ -9,22 +9,29 @@ import ChiefBoard from "./pages/chiefBoard/ChiefBoard";
 import CreateMeal from "./pages/createMeal/CreateMeal";
 import AddVitals from "./pages/addVitals/AddVitals";
 import Summary from "./pages/summary/Summary";
+import { Grid, GridCol } from "@mantine/core";
+import { SideBar } from "../Components/SideBar";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/register" element={<Auth />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/chiefboard" element={<ChiefBoard />} />
-          <Route path="/createmeal" element={<CreateMeal />} />
-          <Route path="/addvitals" element={<AddVitals />} />
-          <Route path="/summary" element={<Summary />} />
-        </Routes>
-      </Router>
-    </>
+    <Grid>
+      <GridCol span={2}>
+        <SideBar />
+      </GridCol>
+      <GridCol span="auto">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/register" element={<Auth />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/chiefboard" element={<ChiefBoard />} />
+            <Route path="/createmeal" element={<CreateMeal />} />
+            <Route path="/addvitals" element={<AddVitals />} />
+            <Route path="/summary" element={<Summary />} />
+          </Routes>
+        </Router>
+      </GridCol>
+    </Grid>
   );
 }
 

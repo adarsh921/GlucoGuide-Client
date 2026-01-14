@@ -3,10 +3,11 @@ import { useForm } from "@mantine/form";
 import api from "../../api/axios";
 import VitalsDisplay from "../../../Components/VitalsDisplay";
 import { useState, useEffect, useMemo } from "react";
+import { vitalsEventBus } from "../../events/healthEvents";
 
 const AddVitals = () => {
   const [vitalsData, setVitalsData] = useState(null);
-  console.log(vitalsData);
+  // console.log(vitalsData);
 
   const vitalsForm = useForm({
     mode: "uncontrolled",
@@ -39,20 +40,19 @@ const AddVitals = () => {
     fetchVitals();
   }, []);
 
-  
   /* TO PREVENT RENDERING OF VitalsDisplay EVERYTIME A FORM FIELD CHANGES, WE USED USEMEMO */
   const memoizedVitalsDisplay = useMemo(() => {
     if (!vitalsData) return null;
     return <VitalsDisplay values={vitalsData} />;
   }, [vitalsData]);
-  
 
   const handleSubmit = async (values) => {
     console.log(values);
     try {
       const response = await api.post(`/api/vitals`, values);
+      vitalsEventBus.dispatchEvent(new Event("vitals-updated"));
       console.log("from backend:", response.data);
-      setVitalsData([response.data.savedVitals]);
+      setVitalsData((prev) => [...prev, response.data.savedVitals]);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -87,7 +87,7 @@ const AddVitals = () => {
           required
           label="fasting or postMeal?"
           placeholder="select one option:"
-          data={["fasting", "Post-meal"]}
+          data={["Fasting", "Post-meal"]}
           clearable
           searchable
           nothingFoundMessage="Nothing found... "
@@ -171,7 +171,6 @@ const AddVitals = () => {
           Add Vitals
         </Button>
       </form>
-
       {memoizedVitalsDisplay}
     </div>
   );

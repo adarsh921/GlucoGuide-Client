@@ -32,9 +32,6 @@ const ChiefBoard = () => {
 
   return (
     <div>
-      <h1>CHIEF_BOARD</h1>
-      <h2>{`Hi!, ${username}`}</h2>
-
       <Grid gutter="xl">
         <Grid.Col span={4} w="50%" offset={2}>
           <Card shadow="lg" padding="lg" radius="md">

@@ -1,10 +1,8 @@
 import { useForm } from "@mantine/form";
 import { Select, NumberInput, Button } from "@mantine/core";
-// import axios from "axios";
 import api from "../../api/axios";
 import TodaySugarDisplay from "../../../Components/TodaySugarDisplay";
-import { useState } from "react";
-
+import { healthEventBus } from "../../events/healthEvents";
 const CreateMeal = () => {
   const MealForm = useForm({
     mode: "uncontrolled",
@@ -24,6 +22,7 @@ const CreateMeal = () => {
     // console.log(token);
     try {
       const response = await api.post(`/api/meals`, values);
+      healthEventBus.dispatchEvent(new Event("health-updated"));
       console.log("from backend:", response.data.data);
       // if (response) {
       //   setTodayLog(true);
