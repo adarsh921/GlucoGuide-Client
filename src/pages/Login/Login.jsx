@@ -1,12 +1,14 @@
 import { Button, TextInput, PasswordInput, Flex, Avatar } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IconUser } from "@tabler/icons-react";
 import axios from "axios";
 import "./login.css";
+import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
+  const setIsAuthenticated = useContext(AuthContext).setIsAuthenticated;
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -35,6 +37,7 @@ const Login = () => {
     console.log(response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("username", values.name);
+    setIsAuthenticated(true);
     if (response.data.token) {
       navigate("/chiefboard");
     }

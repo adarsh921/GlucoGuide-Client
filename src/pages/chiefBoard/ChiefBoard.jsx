@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mantine/core";
+import { Box, Button } from "@mantine/core";
 import CreateMeal from "../createMeal/CreateMeal";
 import { Card, Image, Text, Badge, Group, Grid } from "@mantine/core";
+import { AuthContext } from "../../context/AuthContext";
 
 const ChiefBoard = () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  
+  const setIsAuthenticated = useContext(AuthContext).setIsAuthenticated;
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -17,6 +19,7 @@ const ChiefBoard = () => {
 
   const handleClick = () => {
     localStorage.removeItem("token");
+    setIsAuthenticated(false);
     navigate("/login");
   };
 
@@ -31,9 +34,9 @@ const ChiefBoard = () => {
   };
 
   return (
-    <div>
-      <Grid gutter="xl">
-        <Grid.Col span={4} w="50%" offset={2}>
+    <Box mt="3%">
+      <Grid>
+        <Grid.Col span={{ base: 12, md: 6 }} w="50%">
           <Card shadow="lg" padding="lg" radius="md">
             <Card.Section>
               <Image
@@ -55,8 +58,8 @@ const ChiefBoard = () => {
           </Card>
         </Grid.Col>
 
-        <Grid.Col span={4} w="50%">
-          <Card shadow="lg" padding="lg" radius="md">
+        <Grid.Col span={{ base: 12, md: 6 }} w="50%">
+          <Card shadow="lg" padding="lg" radius="md" h="100%">
             <Card.Section>
               <Image
                 src="https://health-e.in/wp-content/uploads/2023/03/7-Vital-Signs-to-Monitor-Regularly.webp"
@@ -79,7 +82,7 @@ const ChiefBoard = () => {
       </Grid>
 
       <Grid>
-        <Grid.Col span={8} mx="auto" my="auto">
+        <Grid.Col span={{ base: 12 }} mx="auto" my="auto">
           <Card shadow="lg" padding="lg" radius="md">
             <Card.Section>
               <Image
@@ -102,7 +105,7 @@ const ChiefBoard = () => {
         </Grid.Col>
       </Grid>
       <Button onClick={handleClick}>logout</Button>
-    </div>
+    </Box>
   );
 };
 export default ChiefBoard;

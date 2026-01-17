@@ -11,13 +11,25 @@ import AddVitals from "./pages/addVitals/AddVitals";
 import Summary from "./pages/summary/Summary";
 import { Grid, GridCol } from "@mantine/core";
 import { SideBar } from "../Components/SideBar";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
+  console.log(useContext(AuthContext).isAuthenticated);
+  const setIsAuthenticated = useContext(AuthContext).setIsAuthenticated;
+  
+  useEffect(() => {
+    if (localStorage.getItem("token")) setIsAuthenticated(true);
+  }, []);
+
   return (
     <Grid>
-      <GridCol span={2}>
-        <SideBar />
-      </GridCol>
+      {/* SideBar is visible only on screen sizes greater than or equal to small */}
+      {useContext(AuthContext).isAuthenticated && (
+        <GridCol span={2} visibleFrom="sm">
+          <SideBar />
+        </GridCol>
+      )}
       <GridCol span="auto">
         <Router>
           <Routes>

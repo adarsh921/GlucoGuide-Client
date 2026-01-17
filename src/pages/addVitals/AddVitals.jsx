@@ -4,6 +4,7 @@ import api from "../../api/axios";
 import VitalsDisplay from "../../../Components/VitalsDisplay";
 import { useState, useEffect, useMemo } from "react";
 import { vitalsEventBus } from "../../events/healthEvents";
+import "./add_vitals.css"
 
 const AddVitals = () => {
   const [vitalsData, setVitalsData] = useState(null);

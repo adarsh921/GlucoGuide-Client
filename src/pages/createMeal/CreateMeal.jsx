@@ -3,6 +3,8 @@ import { Select, NumberInput, Button } from "@mantine/core";
 import api from "../../api/axios";
 import TodaySugarDisplay from "../../../Components/TodaySugarDisplay";
 import { healthEventBus } from "../../events/healthEvents";
+import "./create_meal.css";
+
 const CreateMeal = () => {
   const MealForm = useForm({
     mode: "uncontrolled",
@@ -252,7 +254,7 @@ const CreateMeal = () => {
           Create Meal
         </Button>
       </form>
-      <TodaySugarDisplay/>
+      <TodaySugarDisplay />
     </div>
   );
 };
