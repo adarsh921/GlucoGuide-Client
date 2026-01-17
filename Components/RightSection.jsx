@@ -28,13 +28,15 @@ const RightSection = () => {
   };
 
   useEffect(() => {
-  
-    getVitalsForARange("2025-12-16", new Date().toLocaleDateString());
+    getVitalsForARange("2025-12-16", new Date().toISOString().split("T")[0]);
     console.log(" I RAN on refresh! from line chart");
 
     const handler = () =>
-      getVitalsForARange("2025-12-16", new Date().toLocaleDateString());
+      getVitalsForARange("2025-12-16", new Date().toISOString().split("T")[0]);
     vitalsEventBus.addEventListener("vitals-updated", handler);
+    return () => {
+      vitalsEventBus.removeEventListener("vitals-updated", handler);
+    };
   }, []);
 
   return (
