@@ -1,4 +1,11 @@
-import { Button, TextInput, PasswordInput, Flex, Avatar } from "@mantine/core";
+import {
+  Button,
+  TextInput,
+  PasswordInput,
+  Flex,
+  Avatar,
+  Loader,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +13,10 @@ import { IconUser } from "@tabler/icons-react";
 import axios from "axios";
 import "./login.css";
 import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const setIsAuthenticated = useContext(AuthContext).setIsAuthenticated;
   useEffect(() => {
@@ -28,18 +38,25 @@ const Login = () => {
   });
 
   const handleSubmit = async (values) => {
-    console.log("Form Submitted:", values);
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/login`,
-      values,
-      { withCredentials: true }
-    );
-    console.log(response);
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("username", values.name);
-    setIsAuthenticated(true);
-    if (response.data.token) {
-      navigate("/chiefboard");
+    try {
+      setIsLoading(true);
+      console.log("Form Submitted:", values);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        values,
+        { withCredentials: true },
+      );
+      console.log(response);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", values.name);
+      setIsAuthenticated(true);
+      if (response.data.token) {
+        navigate("/chiefboard");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,6 +87,7 @@ const Login = () => {
             size="xl"
             radius="xl"
           />
+          {isLoading && <Loader type="dots"/>}
           <PasswordInput
             placeholder="Password"
             className="loginInput"
